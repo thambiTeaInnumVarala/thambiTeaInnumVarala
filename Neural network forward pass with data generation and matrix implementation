@@ -1,0 +1,61 @@
+# -*- coding: utf-8 -*-
+"""
+@author: Balaji
+"""
+print('\n 18 March Program for a simple neural network, doing a forward pass with one layer')
+print('\n 21 March Added provision for data generation for use in training.')
+print('\n 21 March Formating input data as a matrix for faster multiplication with weights')
+
+import numpy as np
+import  matplotlib.pyplot as plt
+num_neurons     = 4;
+num_pixels      = 2;
+num_images      = 3;
+np.random.seed(1); #For repeatability
+# Input data set properties
+slope           = np.tan(np.deg2rad(30));
+intercept       = 50;
+
+print('\n Creating input data:')
+inputs  = np.zeros((num_images,num_pixels));
+x = np.arange(0,num_pixels);
+for dataSet_iter in range(num_images):
+    inputs[dataSet_iter,:] = (slope*x+intercept)+ intercept*0.2*(np.random.randn(1,x.size) );
+
+print('\n Plotting input data set :')    
+plt.plot(x,inputs.transpose(),'o')
+plt.xlabel('Pixel number')
+plt.ylabel('Pixel value')
+plt.title('Input data set')
+plt.legend()
+plt.show()
+
+print('\n Each row is a data set')
+weights = np.random.randn(num_neurons ,num_pixels);
+bias    = np.random.randn(num_neurons ,1);
+results = np.zeros_like(bias)
+
+print('\n Input = ')
+print(inputs)
+
+print('\n Weights = ')
+print(weights)
+
+print('\n Bias = ')
+print(bias)
+
+# Output computation in matrix format
+results = np.dot(weights,inputs.transpose())+bias;
+
+# Output  computation in loop method
+for input_iter in inputs:
+    for weight_iter,bias_iter,result_iter in zip(weights,bias,results):
+        print('\n Input data set:')
+        print(input_iter);
+        print('\n is multiplied with weights')
+        print(weight_iter)
+        print('\n and added with bias')
+        print(bias_iter)
+        print('\n to give the result of neuron as')
+        result_iter = input_iter.dot(weight_iter) + bias_iter;
+        print(result_iter)
